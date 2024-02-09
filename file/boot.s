@@ -6,7 +6,7 @@ stack_top:
 
 
 
-.global _starts
+.global _start
 
 .global screens
 .global fpc_do_exit			
@@ -18,7 +18,7 @@ stack_top:
 .global INIT$_$SYSTEM
 .extern main
 .section .text
-_starts:
+_start:
 	
 	call main
 FPC_LIB_EXIT:
