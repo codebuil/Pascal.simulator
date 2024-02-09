@@ -9,7 +9,7 @@ begin
         for i := 0 to 2000 do
         begin
                scr[i*2] := #65;
-               scr[i*2+1] := #23;
+               scr[i*2+1] := #224;
         end;
                
                

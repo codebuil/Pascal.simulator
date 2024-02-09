@@ -1,29 +1,33 @@
-ENTRY (main)
- 
+ENTRY(_start)
 SECTIONS
 {
-    . = 0x00101000;
-    
-  .text ALIGN(0x1000) :
-    {
-        *(.text)
-    }
+	
+	. = 1M;
  
-    .rodata ALIGN(0x1000) :
-    {
-        *(.rodata*)
-    }
+	
+	.text BLOCK(4K) : ALIGN(4K)
+	{
+		*(.multiboot)
+		*(.text)
+	}
  
-    .data ALIGN(0x1000) :
-    {
-        *(.data)
-    }
+	
+	.rodata BLOCK(4K) : ALIGN(4K)
+	{
+		*(.rodata)
+	}
  
-    .bss ALIGN(0x1000) :
-    {
-        *(COMMON)
-        *(.bss)
-    }
+	
+	.data BLOCK(4K) : ALIGN(4K)
+	{
+		*(.data)
+	}
+ 
+	
+	.bss BLOCK(4K) : ALIGN(4K)
+	{
+		*(COMMON)
+		*(.bss)
+	}
  
 }
- 

@@ -9,7 +9,7 @@ stack_top:
 .global _starts
 
 .global screens
-.global fpc_do_exit
+.global fpc_do_exit			
 .global FPC_LIB_EXIT
 .global PC_LIB_EXIT
 .global fpc_initializeunits
@@ -17,6 +17,7 @@ stack_top:
 .global THREADVARLIST_$SYSTEM$indirect
 .global INIT$_$SYSTEM
 .extern main
+.section .text
 _starts:
 	
 	call main
