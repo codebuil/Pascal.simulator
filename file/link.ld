@@ -1,33 +1,29 @@
-ENTRY(_start)
+ENTRY (INIT$_$SYSTEM)
+ 
 SECTIONS
 {
-	
-	. = 1M;
+    . = 0x00102000;
+    
+  .text ALIGN(0x1000) :
+    {
+        *(.text)
+    }
  
-	
-	.text BLOCK(4K) : ALIGN(4K)
-	{
-		*(.multiboot)
-		*(.text)
-	}
+    .rodata ALIGN(0x1000) :
+    {
+        *(.rodata*)
+    }
  
-	
-	.rodata BLOCK(4K) : ALIGN(4K)
-	{
-		*(.rodata)
-	}
+    .data ALIGN(0x1000) :
+    {
+        *(.data)
+    }
  
-	
-	.data BLOCK(4K) : ALIGN(4K)
-	{
-		*(.data)
-	}
- 
-	
-	.bss BLOCK(4K) : ALIGN(4K)
-	{
-		*(COMMON)
-		*(.bss)
-	}
+    .bss ALIGN(0x1000) :
+    {
+        *(COMMON)
+        *(.bss)
+    }
  
 }
+ 
