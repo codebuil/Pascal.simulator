@@ -42,17 +42,23 @@ class BareboneBuilder:
     def build_kernel(self):
         filename = tk.filedialog.askopenfilename(title="Select file")
         self.text_area.delete(1.0, tk.END)
+        self.execute_command("mv -f kernel.bin /tmp/null",False)
+        self.execute_command("mv -f /tmp/kernel.o /tmp/null",False)
+        self.execute_command("mv -f /tmp/ppas.sh /tmp/null",False)
+        self.execute_command("mv -f ppas.sh /tmp/null",False)
+        self.execute_command("mv -f link.res /tmp/null",False)
         self.execute_command("unzip -u ./file/CD_root.zip -d /tmp",False)
         self.execute_command("as -o /tmp/boot.o ./file/boot.s",True)
-        self.execute_command("nasm -o /tmp/model.o ./file/model.asm",True)
-       
+        self.execute_command("nasm -o ./file/model.o ./file/model.asm",True)
+        self.execute_command("gcc -c -nostdlib ./file/base.c  -o /tmp/base.o",True)
+
         fff=f'fpc -Cn -CcCDECL -O2 -Xs -Xs -Xt -Pi386 -Tlinux "$1"'.replace("$1",filename)
         
         self.execute_command(fff,True)
         self.execute_command("cp -f ppas.sh /tmp",False)
         self.execute_command("cp -f link.res /tmp",False)
         self.execute_command("mv -f ./kernel.o /tmp",False)
-        self.execute_command("gcc -nostdlib -T ./file/link.ld /tmp/boot.o  /tmp/kernel.o  -o /tmp/hello.elf",True)
+        self.execute_command("gcc -nostdlib -T ./file/link.ld /tmp/boot.o /tmp/base.o /tmp/kernel.o  -o /tmp/hello.elf",True)
 
         self.execute_command("cp -f /tmp/hello.elf /tmp/hello.c32",True)
         self.execute_command("dd if=/tmp/model.o of=/tmp/hello.elf  count=1 conv=notrunc",True)
